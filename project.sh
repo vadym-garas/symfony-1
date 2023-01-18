@@ -10,7 +10,7 @@ while [[ "$#" -gt 0 ]]; do
     esac
     shift
 done
-if [ install == true ]; then
+if [[ "$install" == true ]]; then
       echo 'Installation';
       docker-compose --env-file .env.install up --build;
     else
