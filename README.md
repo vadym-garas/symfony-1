@@ -6,16 +6,33 @@ php-fpm 8.1
 Mysql latest
 nginx latest
 
-## Use
+## Installation
 ### Step 1
 Copy `.env.install.dist` file to `.env.install`
 
 Change `PROJECT_NAME` in `.env.install`
 
 ### Step 2
-run `docker-compose --env-file .env.install up`
+```console
+docker-compose --env-file .env.install up --build
+```
+OR
+```console
+/bin/bash project.sh -i
+```
 
 This may take a few minutes. Wait for completion.
 
 ### Step 3
 Profit
+
+## Use
+
+For use 
+```console
+docker-compose --env-file .env.local up
+```
+OR
+```console
+/bin/bash project.sh
+```
