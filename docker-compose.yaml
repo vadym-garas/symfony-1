@@ -1,0 +1,40 @@
+version: "3"
+services:
+  php:
+    container_name: php_${PROJECT_NAME}
+    build:
+      context: ./
+      dockerfile: docker/configs/php/Dockerfile
+    environment:
+      XDEBUG_CONFIG: remote_host={{YOUR_IP_ADDRESS}}
+      PHP_IDE_CONFIG: serverName=docker
+    volumes:
+      - ./:/srv/src/app
+    links:
+      - db_mysql
+
+  db_mysql:
+    image: mysql:latest
+    container_name: mysql_${PROJECT_NAME}
+    ports:
+      - 13306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE:  ${MYSQL_DATABASE:-project_db}
+      MYSQL_USER:  ${MYSQL_USER:-dbuser}
+      MYSQL_PASSWORD:  ${MYSQL_PASSWORD:-pass4dbuser}
+    volumes:
+      - ./docker/databases/mysql_dump:/docker-entrypoint-initdb.d
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_${PROJECT_NAME}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/srv/src/app
+      - ./docker/configs/nginx:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
+    links:
+      - php
