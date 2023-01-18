@@ -1,7 +1,7 @@
 #!/bin/sh
 
 install_path=/srv/src/symfony_install
-target_path=/srv/src/app/2
+target_path=/srv/src/app
 
 On_Green='\033[42m'
 NC='\033[0m' # No Color
