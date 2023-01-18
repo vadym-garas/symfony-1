@@ -14,6 +14,8 @@ services:
     build:
       context: ./
       dockerfile: docker/configs/php/Dockerfile
+      args:
+        WORKDIR: ${WORKDIR}
     environment:
       WORKDIR: ${WORKDIR}
       XDEBUG_CONFIG: remote_host={{YOUR_IP_ADDRESS}}
