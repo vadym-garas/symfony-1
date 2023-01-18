@@ -1,5 +1,12 @@
 version: "3"
 services:
+  symfony-install:
+    container_name: symfony_${PROJECT_NAME}_install
+    build:
+      context: ./
+      dockerfile: docker/configs/php/Dockerfile-installer
+    volumes:
+      - ./:${WORKDIR}
   php:
     container_name: php_${PROJECT_NAME}
     build:
@@ -9,7 +16,7 @@ services:
       XDEBUG_CONFIG: remote_host={{YOUR_IP_ADDRESS}}
       PHP_IDE_CONFIG: serverName=docker
     volumes:
-      - ./:/srv/src/app
+      - ./:${WORKDIR}
     links:
       - db_mysql
 
@@ -33,7 +40,7 @@ services:
       - ${HTTP_PORT}:80
       - ${HTTPS_PORT}:443
     volumes:
-      - ./:/srv/src/app
+      - ./:${WORKDIR}
       - ./docker/configs/nginx:/etc/nginx/conf.d
       - ./logs/nginx:/var/log/nginx
     links:
