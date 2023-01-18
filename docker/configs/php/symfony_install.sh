@@ -49,7 +49,7 @@ if test -f "symfony.lock"; then
     echo -e "${On_Green}  Delete tmp dir   ${NC}"
     rm -rf $install_path
 
-    git add $target_path/.
+    git add $target_path/*
 
     echo -e "${On_Green}   Install complete successful   ${NC}"
 #    echo -e "${On_Green}   Run 'docker-compose up' now  ${NC}"

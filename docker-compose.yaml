@@ -5,6 +5,8 @@ services:
     build:
       context: ./
       dockerfile: docker/configs/php/Dockerfile-installer
+    environment:
+      WORKDIR: ${WORKDIR}
     volumes:
       - ./:${WORKDIR}
   php:
@@ -13,6 +15,7 @@ services:
       context: ./
       dockerfile: docker/configs/php/Dockerfile
     environment:
+      WORKDIR: ${WORKDIR}
       XDEBUG_CONFIG: remote_host={{YOUR_IP_ADDRESS}}
       PHP_IDE_CONFIG: serverName=docker
     volumes:
@@ -26,6 +29,7 @@ services:
     ports:
       - ${MYSQL_PORT}:3306
     environment:
+      WORKDIR: ${WORKDIR}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
       MYSQL_DATABASE:  ${MYSQL_DATABASE:-project_db}
       MYSQL_USER:  ${MYSQL_USER:-dbuser}
@@ -36,12 +40,17 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx_${PROJECT_NAME}
+    environment:
+      WORKDIR: ${WORKDIR}
+      HTTP_PORT: ${HTTP_PORT}
+      HTTPS_PORT: ${HTTPS_PORT}
     ports:
       - ${HTTP_PORT}:80
       - ${HTTPS_PORT}:443
     volumes:
       - ./:${WORKDIR}
       - ./docker/configs/nginx:/etc/nginx/conf.d
+      - ./docker/configs/nginx/project.conf.template:/etc/nginx/templates/project.conf.template
       - ./logs/nginx:/var/log/nginx
     links:
       - php
