@@ -16,7 +16,7 @@ if test -f "${target_path}/symfony.lock"; then
     curl -sS https://get.symfony.com/cli/installer | bash
     mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
-    symfony new $install_path --version="6.3.*@dev" --webapp >/dev/null
+    symfony new $install_path --version="${SYMFONY_VERSSION_INSTALL}" --webapp >/dev/null
 
     rm -rf $install_path/.git
     rm -rf $install_path/docker*
@@ -42,7 +42,7 @@ if test -f "${target_path}/symfony.lock"; then
     cat docker/configs/php/.env.default >> $install_path/.env.local
 
 
-    echo -e "DATABASE_URL=\"mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?serverVersion=8&charset=utf8mb4\"" >> $install_path/.env.local
+    echo -e "DATABASE_URL=\"mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db_mysql/${MYSQL_DATABASE}?serverVersion=8&charset=utf8mb4\"" >> $install_path/.env.local
 
 
     echo -e "${On_Green}   Generate .gitignore file   ${NC}"
