@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 export $(grep -v '^#' /srv/src/app/.env.install | xargs)
 
 install_path=/srv/src/symfony_install
@@ -16,7 +17,7 @@ if test -f "${target_path}/symfony.lock"; then
     curl -sS https://get.symfony.com/cli/installer | bash
     mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
-    symfony new $install_path --version="${SYMFONY_VERSSION_INSTALL}" --webapp >/dev/null
+    symfony new $install_path --version="${SYMFONY_VERSION_INSTALL}" --webapp >/dev/null
 
     rm -rf $install_path/.git
     rm -rf $install_path/docker*

@@ -5,6 +5,8 @@ services:
     build:
       context: ./
       dockerfile: docker/configs/php/Dockerfile-installer
+      args:
+        WORKDIR: ${WORKDIR}
     environment:
       WORKDIR: ${WORKDIR}
     volumes:
